@@ -20,3 +20,8 @@ providing the name. They will print with usage.
 Example:
 
 `sbt "run 150 bb8.gif"`
+
+
+If you don't have sbt installed, you can use the activator script
+
+`./activator run 150 bb8.gif`
