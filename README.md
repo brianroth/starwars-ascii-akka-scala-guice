@@ -1,21 +1,22 @@
-Akka DI with Guice and Scala
-============================
+#What is this???
+This project will create animated ascii console art from any gif.
 
-Demonstrates how to do Akka Dependency Injection with Guice and Scala.
+It is written in scala and uses akka actors for asynchronous processing, as well
+as google guice for dependency injection
 
-This template is based on the [akka-java-spring](https://github.com/typesafehub/activator-akka-java-spring) 
-template.
+#How to run???
 
-Setup
------
+`sbt run`
 
-1. [Download Typesafe Activator](http://typesafe.com/platform/getstarted) (or copy it over from a USB)
-2. Extract the zip and run the `activator` or `activator.bat` script from a non-interactive shell
-3. Your browser should open to the Activator UI: [http://localhost:8888](http://localhost:8888)
+will print out usage.
 
-Open in an IDE
---------------
+There are two arguments, targetWidth and file. Here is an example:
 
-If you want to use an IDE (Eclipse or IntelliJ), click on *Code*, select *Open*, and then select your IDE.
-This will walk you through the steps to generate the project files and open the project. Alternatively you
-can edit files in the Activator UI.
+`sbt "run 150 /home/dgoetsch/Dowloads/bb8.gif"`
+
+I've also put a bunch of gifs in resources, and you can run these by just
+providing the name. They will print with usage.
+
+Example:
+
+`sbt run 150 bb8.gif`
