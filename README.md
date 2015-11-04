@@ -19,4 +19,4 @@ providing the name. They will print with usage.
 
 Example:
 
-`sbt run 150 bb8.gif`
+`sbt "run 150 bb8.gif"`
