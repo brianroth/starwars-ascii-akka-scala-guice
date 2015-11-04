@@ -13,6 +13,21 @@ public class ConsoleUtils {
      */
     public final static void clearConsole()
     {
+        //This does not work
+//        try
+//        {
+//            final String os = System.getProperty("os.name");
+//
+//            if (os.contains("Windows"))
+//            {
+//                Runtime.getRuntime().exec("cls");
+//            }
+//            else
+//            {
+//                Runtime.getRuntime().exec("clear");
+//            }
+//        }
+        //this is not an actual solution
         try
         {
             System.out.print(String.format("\033[2J"));

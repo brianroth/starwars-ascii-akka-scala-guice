@@ -18,6 +18,7 @@ libraryDependencies ++= {
 }
 libraryDependencies += "jline" % "jline" % "2.11"
 
+fork := false
 
 scalacOptions ++= Seq(
   "-unchecked",
