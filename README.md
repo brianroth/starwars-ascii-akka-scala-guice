@@ -24,4 +24,4 @@ Example:
 
 If you don't have sbt installed, you can use the activator script
 
-`./activator run 150 bb8.gif`
+`./activator "run 150 bb8.gif"`
