@@ -1,4 +1,4 @@
-package nerdery.jvm.challenge.starwars.ascii;
+package gif.util;
 
 /**
  * Created by dgoetsch on 11/4/15.

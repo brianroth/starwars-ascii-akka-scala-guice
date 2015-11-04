@@ -4,7 +4,7 @@ import akka.actor.{ActorLogging, Actor}
 import akkaguice.NamedActor
 import com.google.inject.Inject
 import gif.AsciiRenderer.Start
-import nerdery.jvm.challenge.starwars.ascii.ConsoleUtils
+import gif.util.ConsoleUtils
 
 /**
  * Created by dgoetsch on 11/4/15.
