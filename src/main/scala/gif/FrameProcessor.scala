@@ -45,33 +45,36 @@ class FrameProcessor @Inject() (@Named("asciiRenderer") asciiRenderer: ActorRef)
     val blues = new ListBuffer[Int]
     val greens = new ListBuffer[Int]
 
-    for(curX <- x until x + multiplier) {
-      for(curY <- y until y + multiplier) {
-        try {
-          val rgb: Int = frame.getRGB(curX, curY)
-          reds += rgb & 0xFF0000 >> 16
-          greens += rgb & 0x00FF00 >> 8
-          blues += rgb & 0x0000FF >> 0
-        } catch {
-          case e: Exception => {}
-        }
-      }
-
+    for(
+      curX <- x until x + multiplier;
+      curY <- y until y + multiplier
+    ) try {
+      val rgb: Int = frame.getRGB(curX, curY)
+      reds += rgb & 0xFF0000 >> 16
+      greens += rgb & 0x00FF00 >> 8
+      blues += rgb & 0x0000FF >> 0
+    } catch {
+      case e: Exception => {}
     }
+
     val redAvg: Int = reds.foldLeft(0)(_ + _) / reds.length
     val blueAvg: Int = blues.foldLeft(0)(_ + _) / blues.length
     val greenAvg: Int = greens.foldLeft(0)(_ + _) / greens.length
     val color = (greenAvg + redAvg + blueAvg)/3
-    if (color < 30) "@"
-    else if (color < 60) "%"
-    else if (color < 90) "#"
-    else if (color < 120) "*"
-    else if (color < 150) "+"
-    else if (color < 180) "="
-    else if (color < 210) "-"
-    else if (color < 240) ":"
-    else if (color < 270) "."
-    else " "
+
+    val result = color match {
+      case c if c < 30 => "@"
+      case c if c < 60 => "%"
+      case c if c < 90 => "#"
+      case c if c < 120 => "*"
+      case c if c < 150 => "+"
+      case c if c < 180 => "="
+      case c if c < 210 => "-"
+      case c if c < 240 => ":"
+      case c if c < 270 => "."
+      case _ => " "
+    }
+    result
   }
 }
 object FrameProcessor extends NamedActor {
