@@ -8,20 +8,26 @@ as google guice for dependency injection
 
 `sbt run`
 
-will print out usage.
+will run with default values.
 
-There are two arguments, targetWidth and file. Here is an example:
+`sbt "run --help"`
 
-`sbt "run 150 /home/dgoetsch/Dowloads/bb8.gif"`
+will print out help information
 
-I've also put a bunch of gifs in resources, and you can run these by just
-providing the name. They will print with usage.
+There are three arguments, width, height, and file. Here is an example:
+
+`sbt "run --height 100 --width 150 --file /home/dgoetsch/Dowloads/bb8.gif"`
+
+height and width are the number of ascii characters to render in the given direction
+file is a path to a file ont he system, or a gif packaged in this project.
+
+You can run packaged gifs by just providing the name. Options will print with help.
 
 Example:
 
-`sbt "run 150 bb8.gif"`
+`sbt "run --file bb8.gif"`
 
 
 If you don't have sbt installed, you can use the activator script
 
-`./activator "run 150 bb8.gif"`
+`./activator "run --file bb8.gif"`

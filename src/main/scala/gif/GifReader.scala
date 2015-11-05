@@ -12,13 +12,13 @@ import com.google.inject.name.Named
 import com.sun.imageio.plugins.gif.{GIFImageReaderSpi, GIFImageReader}
 import gif.AsciiRenderer.Start
 import gif.FrameProcessor.{FrameResult, ProcessFrame}
-import gif.GifReader.DoRead
+import gif.GifReader.{TransformResult, DoRead}
+import scala.concurrent.Await
 
 import scala.concurrent.Future
 
 class GifReader @Inject() (
-                            @Named("frameProcessor") frameProcessor: ActorRef,
-                            @Named("asciiRenderer") asciiRenderer: ActorRef)
+                            @Named("frameProcessor") frameProcessor: ActorRef)
   extends Actor with ActorLogging {
 
   import scala.concurrent.ExecutionContext.Implicits.global
@@ -33,20 +33,24 @@ class GifReader @Inject() (
       //asynchronously transform all of the gif images into ascii art
       val processedFrameFuture = for {
         processedFrames <- Future.sequence((0 until ir.getNumImages(true)).map {
-          number => frameProcessor.ask(ProcessFrame(ir.read(number), req.targetWidth)).mapTo[FrameResult]
+          number => frameProcessor.ask(ProcessFrame(ir.read(number), req.targetWidth, req.targetHeight)).mapTo[FrameResult]
         })
       } yield processedFrames
 
-      //now pass them on to be rendered
-      processedFrameFuture.onSuccess {
-        case frameResult =>
-          asciiRenderer.ask(Start(frameResult.map( f => f.value).toSeq))
-      }
+//      //now pass them on to be rendered
+//      processedFrameFuture.onSuccess {
+//        case frameResult =>
+//
+//          //asciiRenderer.ask(Start(frameResult.map( f => f.value).toSeq))
+//          //sender() ! TransformResult(frameResult.map( f => f.value).toSeq)
+//      }
+      sender() ! TransformResult(Await.result(processedFrameFuture, timeout.duration).map( f => f.value).toSeq)
     }
   }
 }
 
 object GifReader extends NamedActor {
   override final val name = "gifReader"
-  case class DoRead(inputStream: InputStream, targetWidth: Int)
+  case class DoRead(inputStream: InputStream, targetWidth: Int, targetHeight: Int)
+  case class TransformResult(frames: Seq[String])
 }

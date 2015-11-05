@@ -18,12 +18,12 @@ class FrameProcessor @Inject() (@Named("asciiRenderer") asciiRenderer: ActorRef)
     case req: ProcessFrame =>
       val height: Int = req.frame.getHeight()
       val width: Int = req.frame.getWidth()
-      val multiplier: Int = width / req.targetWidth
-      val targetHeight: Int = height / multiplier
-      val sb = new StringBuilder(targetHeight * req.targetWidth)
-      for(y <- 0 until height by multiplier) {
-        for(x <- 0 until width by multiplier) {
-          sb.append(calculateColor(req.frame, multiplier, x, y))
+      val widthMultiplier: Int = width / req.targetWidth
+      val heightMultiplier: Int = height / req.targetHeight
+      val sb = new StringBuilder(req.targetHeight * req.targetWidth)
+      for(y <- 0 until height by heightMultiplier) {
+        for(x <- 0 until width by widthMultiplier) {
+          sb.append(calculateColor(req.frame, widthMultiplier, x, heightMultiplier, y))
         }
         sb.append("\n")
       }
@@ -35,19 +35,25 @@ class FrameProcessor @Inject() (@Named("asciiRenderer") asciiRenderer: ActorRef)
    * i.e. what would the greyscale value be of the set of pixes in Buffered image starting at
    * x,y and proceeding by multiplier in both directions?
    * @param frame
-   * @param multiplier
+   * @param widthMultiplier
    * @param x
+   * @param heightMultiplier
    * @param y
    * @return
    */
-  def calculateColor(frame: BufferedImage, multiplier: Int, x: Int, y: Int): String = {
+  def calculateColor(
+                      frame: BufferedImage,
+                      widthMultiplier: Int,
+                      x: Int,
+                      heightMultiplier: Int,
+                      y: Int): String = {
     val reds = new ListBuffer[Int]
     val blues = new ListBuffer[Int]
     val greens = new ListBuffer[Int]
 
     for(
-      curX <- x until x + multiplier;
-      curY <- y until y + multiplier
+      curX <- x until x + widthMultiplier;
+      curY <- y until y + heightMultiplier
     ) try {
       val rgb: Int = frame.getRGB(curX, curY)
       reds += rgb & 0xFF0000 >> 16
@@ -79,6 +85,6 @@ class FrameProcessor @Inject() (@Named("asciiRenderer") asciiRenderer: ActorRef)
 }
 object FrameProcessor extends NamedActor {
   override final val name = "frameProcessor"
-  case class ProcessFrame(frame: BufferedImage, targetWidth: Int)
+  case class ProcessFrame(frame: BufferedImage, targetWidth: Int, targetHeight: Int)
   case class FrameResult(value: String)
 }
