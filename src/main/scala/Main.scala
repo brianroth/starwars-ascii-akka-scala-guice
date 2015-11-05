@@ -46,7 +46,7 @@ object Main extends App {
   //await gif load and play
   framesF.onSuccess {
     case transformResult =>
-      asciiRenderer ! Start(transformResult.frames)
+      asciiRenderer ! Start(transformResult.frames, fileName)
   }
 
   private def propsForActor(name: String)(implicit system: ActorSystem): Props = {
