@@ -1,6 +1,8 @@
 #What is this???
 This project will create animated ascii console art from any gif.
 
+check out the web-app-conversion branch to use this app as a web server.
+
 It is written in scala and uses akka actors for asynchronous processing, as well
 as google guice for dependency injection
 
