@@ -1,0 +1,19 @@
+@(displayRequest: Form[DisplayRequest])(implicit messages: Messages)
+
+@import helper._
+@import controllers.EvilController
+
+@main("What do you want to watch?") {
+
+    @form(action = routes.EvilController.showGif()) {
+        @inputText(displayRequest("name"))
+        @inputText(displayRequest("width"))
+        @inputText(displayRequest("height"))
+
+
+    <div class="buttons">
+        <input type="submit" value="Show Gif">
+    </div>
+    }
+}
+
