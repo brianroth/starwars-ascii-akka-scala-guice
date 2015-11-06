@@ -41,14 +41,26 @@ object Main extends App {
   implicit val system = injector.getInstance(classOf[ActorSystem])
   val gifReader = system.actorOf(propsForActor(GifReader.name))
   val asciiRenderer = system.actorOf(propsForActor(AsciiRenderer.name))
-  //load gif
-  val framesF = gifReader.ask(DoRead(is, targetWidth, targetHeight)).mapTo[TransformResult]
-  //await gif load and play
-  framesF.onSuccess {
-    case transformResult =>
-      asciiRenderer ! Start(transformResult.frames, fileName)
-  }
+//  //load gif
+//  val framesF = gifReader.ask(DoRead(is, targetWidth, targetHeight)).mapTo[TransformResult]
+//  //await gif load and play
+//  framesF.onSuccess {
+//    case transformResult =>
+//      asciiRenderer ! Start(transformResult.frames, fileName)
+//  }
+  addGif(is)
 
+  def addGif(is: InputStream): Unit = {
+    val framesF = gifReader.ask(DoRead(is, targetWidth, targetHeight)).mapTo[TransformResult]
+    //await gif load and play
+    framesF.onSuccess {
+      case transformResult =>
+        is.close()
+        asciiRenderer ! Start(transformResult.frames, fileName)
+    }
+
+
+  }
   private def propsForActor(name: String)(implicit system: ActorSystem): Props = {
     GuiceAkkaExtension(system).props(name)
   }
