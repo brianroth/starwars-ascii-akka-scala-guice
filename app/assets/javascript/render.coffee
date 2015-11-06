@@ -1,7 +1,7 @@
 run = () ->
   framesString = $("#data")
   console.log(framesString)
-  frames = $.parseJSON(framesString.innerText)
+  frames = $.parseJSON(framesString.html())
   curIndex = 0
   getNextIndex= -> if curIndex >= frames.length then curIndex = 0 else curIndex++
   displayNextFrame = -> $("#gifBody").html(frames[getNextIndex()])
