@@ -1,4 +1,4 @@
-run = () ->
+$ ->
   framesString = $("#data")
   console.log(framesString)
   frames = $.parseJSON(framesString.html())
@@ -7,5 +7,3 @@ run = () ->
   displayNextFrame = -> $("#gifBody").html(frames[getNextIndex()])
   callback = displayNextFrame.bind(this)
   myInterval = window.setInterval(callback, 100)
-$ ->
-    setTimeout(run, 5000)
