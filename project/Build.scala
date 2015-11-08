@@ -19,6 +19,7 @@ object ApplicationBuild extends Build {
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
     "com.google.inject" % "guice" % "4.0",
     "net.codingwell" %% "scala-guice" % "4.0.0",
+    "org.scalaz.stream" % "scalaz-stream_2.11" % "0.8",
     "org.scalatest" %% "scalatest" % "2.2.1" % "test",
     "jline" % "jline" % "2.11",
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test"
