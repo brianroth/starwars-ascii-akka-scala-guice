@@ -1,11 +1,11 @@
 @(displayRequest: Form[DisplayRequest])(implicit messages: Messages)
 
 @import helper._
-@import controllers.EvilController
+@import controllers.GifController
 
 @main("What do you want to watch?") {
 
-    @form(action = routes.EvilController.showGif()) {
+    @form(action = routes.GifController.showGif()) {
         @inputText(displayRequest("name"))
         @inputText(displayRequest("width"))
         @inputText(displayRequest("height"))

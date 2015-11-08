@@ -1,5 +1,5 @@
-GET     /                           controllers.EvilController.index
-GET     /show-gif                   controllers.EvilController.showGif
+GET     /                           controllers.GifController.index
+GET     /show-gif                   controllers.GifController.showGif
 
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

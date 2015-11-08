@@ -15,16 +15,15 @@ import akka.pattern.ask
 import play.api.libs.json.Json
 import play.api.data._
 import play.api.data.Forms._
-import scala.concurrent.{Future, Await}
+import scala.concurrent.{Future}
 
 case class DisplayRequest(name: String, width: Int, height: Int)
 
 @Singleton
-class GifController @Inject()(@Named("gifReader") gifReader: ActorRef,
-                              @Named("asciiRenderer") asciiRenderer: ActorRef) extends Controller {
+class GifController @Inject()(@Named("gifReader") gifReader: ActorRef) extends Controller {
   val GIFHTML = "<script type='text/javascript' src=\"/assets/javascript/render.js\"></script><div id=\"gifBody\"></div><div id=\"gifData\" hidden>%PLACEHOLDER%</div>"
   import scala.concurrent.ExecutionContext.Implicits.global
-  implicit val timeout = Timeout(5000, TimeUnit.MILLISECONDS)
+  implicit val timeout = Timeout(10000, TimeUnit.MILLISECONDS)
   val displayRequest: Form[DisplayRequest] = Form(
     mapping(
       "name" -> text,

@@ -1,6 +1,6 @@
 package modules
 
-import actors.{GifReader, FrameProcessor, AsciiRenderer}
+import actors.{GifReader, FrameProcessor}
 import com.google.inject.AbstractModule
 import play.api.libs.concurrent.AkkaGuiceSupport
 
@@ -9,7 +9,6 @@ import play.api.libs.concurrent.AkkaGuiceSupport
  */
 class AkkaModule extends AbstractModule with AkkaGuiceSupport {
   def configure = {
-    bindActor[AsciiRenderer](AsciiRenderer.name)
     bindActor[FrameProcessor](FrameProcessor.name)
     bindActor[GifReader](GifReader.name)
   }

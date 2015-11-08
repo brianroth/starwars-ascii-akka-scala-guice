@@ -9,7 +9,7 @@ import javax.inject._
 import scala.collection.mutable.{StringBuilder, ListBuffer}
 
 @Singleton
-class FrameProcessor @Inject() (@Named("asciiRenderer") asciiRenderer: ActorRef) extends Actor with ActorLogging{
+class FrameProcessor @Inject() () extends Actor with ActorLogging{
   override def receive: Receive = {
     case req: ProcessFrame =>
       val height: Int = req.frame.getHeight()
